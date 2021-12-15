@@ -41,26 +41,30 @@ nameForm.addEventListener('submit', (e) => {
 
 teamOneAddButton.addEventListener('click', () => {
     // increment the current state for team one's score
-    
+    score1++;
     // display updated data in the current game div
+    teamOneLabel.textContent = score1;
 });
 
 teamTwoAddButton.addEventListener('click', () => {
     // increment the current state for team two's score
-
+    score2++;
     // display updated data in the current game div
+    teamTwoLabel.textContent = score2;
 });
 
 teamOneSubtractButton.addEventListener('click', () => {
     // decrement the current state for team one's score
-
+    score1--;
     // display updated data in the current game div
+    teamOneLabel.textContent = score1;
 });
 
 teamTwoSubtractButton.addEventListener('click', () => {
     // decrement the current state for team two's score
-
+    score2--;
     // display updated data in the current game div
+    teamTwoLabel.textContent = score2;
 });
 
 finishGameButton.addEventListener('click', async() => {
@@ -86,8 +90,9 @@ logoutButton.addEventListener('click', () => {
 });
 
  // on load . . .
-window.addEventListener('', async() => {
+window.addEventListener('load', async() => {
     // fetch all games
+    await displayAllGames();
     // check if there are any
     // if there are, set those as the initial state of pastGames
     // then display all the games (hint: call displayAllGames())
@@ -106,10 +111,16 @@ function displayCurrentGameEl() {
 }
 
 
-function displayAllGames() {
+async function displayAllGames() {
     // clear out the past games list in the DOM
-
+    const games = await getGames();
+    pastGamesEl.textContent = '';
     // fetch and loop through the past games 
+    for (let game of games) {
+        const pastGame = renderGame(game);
+
+        pastGamesEl.append(pastGame);
+    }
     // render and append a past game for each past game in state
 }
 
